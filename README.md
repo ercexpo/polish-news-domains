@@ -47,7 +47,6 @@ fitted_model <- mediascores(Y = Xfinal, group = NULL,
                             variational = TRUE, user_variance = FALSE,
                             chains = 4, cores = 4, threads = 4,
                             warmup = 750, iter = 1500, seed = 1,
-                            # open_progress = TRUE,
                             anchors = c(1, ncol(Xfinal)))
 ```
 

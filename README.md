@@ -57,7 +57,7 @@ We validated the resulting scores in several ways:
 
 ## If you use this resource please cite as follows:
 
-Clemm von Hohenberg, B., Casas, A., and Wojcieszak, M. (2021). A list of Polish news domains with ideology scores and social media accounts. [DOI to add]
+Clemm von Hohenberg, B., Casas, A., and Wojcieszak, M. (2021). A list of Polish news domains with ideology scores and social media accounts. https://doi.org/10.5281/zenodo.5746987
 
 ## Corrections and extensions
 

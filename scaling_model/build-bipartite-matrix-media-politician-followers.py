@@ -76,13 +76,13 @@ for f in media_list:
 		index = [0])
 	media_df = pd.concat((media_df, new_row))
 
-# - only move forward with those domains that have at least 500 followers
+# - only move forward with those domains that have at least 250 followers
 media_df02 = media_df[media_df['n'] > 250]
 media_df02 = media_df02.sort_values('n')
 
 # - distinguish between "small" and "big" media accounts, based on a 
 #   subjective number of follower threshold
-thres = 100000
+thres = 30000
 small_media = list(media_df02[media_df02['n'] < thres]['outlet'])
 big_media = list(media_df02[media_df02['n'] >= thres]['outlet'])
 
@@ -161,7 +161,7 @@ for account in big_media:
 		G.add_edges_from(add_edges)
 		# - finally, sample an additional 300 followers that are not yet
 		#   yet in the graph and add them to it
-		addfollowers_sample = random.sample(diffset, 400)
+		addfollowers_sample = random.sample(diffset, 300)
 		G.add_nodes_from(addfollowers_sample, bipartite = 1)
 		print('\t number of nodes: {}'.format(G.number_of_nodes()))
 		print('\t number of edges: {}'.format(G.number_of_edges()))

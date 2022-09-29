@@ -22,9 +22,9 @@ In addition, we manually searched for local news domains and added them if not y
 
 Our scaling approach builds on the `mediascores` model by Eady and Linder (https://github.com/SMAPPNYU/mediascores), which is based on the assumption of homophily: users on social media, conceived as a one-dimensional ideological space, are more likely to share news from news media accounts close to them. Instead of using sharing behavior, we use following behavior, thus assuming that users are more likely to follow news organizations close to them. 
 
-We developed ideology scores for a subset of the list in March 2021. We only considered domains that were either visited frequently in our data or are well-known outlets even though less visited in our data. Domains also had to have a Twitter account. This left us with 153 domains. 
+The model can be reproduced with the code and data in `scaling_model`. We developed ideology scores for a subset of the list in March 2021. We only considered domains that were either visited frequently in our data or are well-known outlets even though less visited in our data. Domains also had to have a Twitter account. This left us with 153 domains. 
 
-To build the bipartite graph that indicates whether any user follows any news organization, we obtained the list of Twitter followers of all organizations. To avoid an overly sparse graph, we excluded organizations with less than 250 followers. To better estimate ideology scores for small media accounts, we first looked at accounts with less than 30,000 followers and got all followers who follow at least 10 of them. For the Twitter accounts with more than 30,000 followers, we pulled a random sample of 300 followers. From these following patterns, we built a matrix in which each column represents a news organization and every row a follower. A value of 1 indicates following.
+To build the bipartite graph that indicates whether any user follows any news organization, we obtained the list of Twitter followers of all organizations (`get-twitter-followers.py`). To avoid an overly sparse graph, we excluded organizations with less than 250 followers. To better estimate ideology scores for small media accounts, we first looked at accounts with less than 30,000 followers and got all followers who follow at least 10 of them. For the Twitter accounts with more than 30,000 followers, we pulled a random sample of 300 followers. From these following patterns, we built a matrix in which each column represents a news organization and every row a follower  (`build-bipartite-matrix-media-politician-followers.py`.). A value of 1 indicates following.
 
 The top rows and columns of the resulting matrix look like this:
 
@@ -40,7 +40,7 @@ Xfinal[1:7, 1:7]
 1260648515191083008            1             0               0         1            0          0            1
 ``` 
 
-We then fit the model as follows:
+We then fit the model as follows (more detail in ` PL-ideo-scaling-model.R`):
 
 ```r
 fitted_model <- mediascores(Y = Xfinal, group = NULL,
@@ -50,10 +50,11 @@ fitted_model <- mediascores(Y = Xfinal, group = NULL,
                             anchors = c(1, ncol(Xfinal)))
 ```
 
-We validated the resulting scores in several ways: 
+We validated the resulting scores in several ways (see `PL-ideo-scaling-validation.R`): 
 - they have good face validity according to several media and politics experts from Poland;
 - repeating the analyses with members of parliament, most opposition politicians are on one end and most government politicians one the other end;
 - comparing the ideology score of a news domain with the average user ideology visiting that domain in our browsing data, these scores correlate highly.
+
 
 ## If you use this resource please cite as follows:
 
